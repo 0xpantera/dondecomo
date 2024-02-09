@@ -16,6 +16,9 @@ const server = new ApolloServer({
 const handler = startServerAndCreateNextHandler(server, {
     context: async (req: NextApiRequest) => {
         const token = await getToken({ req });
+        if (!token) {
+            throw new Error('No token found');
+        }
         return { token };
     },
 });
